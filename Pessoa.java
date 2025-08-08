@@ -1,4 +1,4 @@
-import java.util.Date;
+        import java.time.LocalDate;
 
 //criando uma classe abstrata para ser implementada pela sub classes 
 
@@ -7,12 +7,12 @@ public abstract class Pessoa {
             //coloquei como protegido para as sub classes, terem acessos, e o modo protegido fica no nível intermediário do público e privado
 
                 protected boolean genero;
-    protected Date idade;    
+    protected LocalDate idade;    
     protected String nacionalidade;
 
         
     // definindo o construtor quando a classe abstrata é criada
-    public Pessoa (boolean genero, Date idade, String nacionalidade) {
+    public Pessoa (boolean genero, LocalDate idade, String nacionalidade) {
         this.genero = genero;
         this.idade = idade;
         this.nacionalidade = nacionalidade;   
@@ -23,7 +23,7 @@ public abstract class Pessoa {
 
 return genero;
         }
-        public Date getIdade () {
+        public LocalDate getIdade () {
                 return idade;
         }
         public String getNacionalidade () {
@@ -37,7 +37,7 @@ return genero;
          this.nacionalidade = nacionalidade;
         }
         
-        public void setIdade (Date idade) {
+        public void setIdade (LocalDate idade) {
                 this.idade = idade;
 
         }
