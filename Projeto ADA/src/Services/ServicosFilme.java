@@ -65,7 +65,7 @@ public class ServicosFilme {
 
         System.out.println("\n🔹 Diretor '" + nome + "' não encontrado. Vamos cadastrá-lo!");
         boolean genero = lerGenero("Gênero (M/F): ");
-        LocalDate nascimento = lerData("Data de Nascimento (dd/MM/yyyy): ");
+        LocalDate nascimento = lerDataOpcional("Data de Nascimento (dd/MM/yyyy) [opcional]: ");
         System.out.print("Nacionalidade: ");
         String nacionalidade = scanner.nextLine();
 
@@ -83,13 +83,36 @@ public class ServicosFilme {
 
         System.out.println("\n🔹 Ator '" + nome + "' não encontrado. Vamos cadastrá-lo!");
         boolean genero = lerGenero("Gênero (M/F): ");
-        LocalDate nascimento = lerData("Data de Nascimento (dd/MM/yyyy): ");
+        LocalDate nascimento = lerDataOpcional("Data de Nascimento (dd/MM/yyyy) [opcional]: ");
         System.out.print("Nacionalidade: ");
         String nacionalidade = scanner.nextLine();
 
         Ator novo = new Ator(nome, genero, nascimento, nacionalidade);
         atores.add(novo);
         return novo;
+    }
+
+    // ===== Helpers para leitura =====
+    private LocalDate lerDataOpcional(String prompt) {
+        System.out.print(prompt);
+        String data = scanner.nextLine().trim();
+        if (data.isEmpty()) return null;
+        try {
+            return LocalDate.parse(data, java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        } catch (Exception e) {
+            System.out.println("⚠ Data inválida. Mantendo sem data.");
+            return null;
+        }
+    }
+
+    private boolean lerGenero(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String g = scanner.nextLine().trim().toUpperCase();
+            if (g.equals("M")) return true;
+            if (g.equals("F")) return false;
+            System.out.println("Digite apenas M ou F.");
+        }
     }
 
     public void visualizarFilmes() {
@@ -104,27 +127,5 @@ public class ServicosFilme {
         return filmes.stream()
                 .filter(f -> f.getTitulo().equalsIgnoreCase(titulo))
                 .findFirst();
-    }
-
-    // ===== Helpers para leitura =====
-    private LocalDate lerData(String prompt) {
-        System.out.print(prompt);
-        try {
-            String data = scanner.nextLine();
-            return LocalDate.parse(data, java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        } catch (Exception e) {
-            System.out.println("⚠ Data inválida. Usando data atual como padrão.");
-            return LocalDate.now();
-        }
-    }
-
-    private boolean lerGenero(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String g = scanner.nextLine().trim().toUpperCase();
-            if (g.equals("M")) return true;
-            if (g.equals("F")) return false;
-            System.out.println("Digite apenas M ou F.");
-        }
     }
 }

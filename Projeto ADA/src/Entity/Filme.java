@@ -47,7 +47,7 @@ public class Filme {
                 .append(String.format("%nLançamento       = %s", dataLancamento.format(FORMATO_DATA)))
                 .append(String.format("%nOrçamento        = R$ %.2f", orcamento))
                 .append(String.format("%nDescrição        = %s", descricao))
-                .append(String.format("%nDiretor          = %s"))
+                .append(String.format("%nDiretores          = %s"))
                 .append(String.format("%nElenco:"));
         for (Diretor diretor : diretores) {
             sb.append(String.format("%n  - %s", diretor.getNome()));
