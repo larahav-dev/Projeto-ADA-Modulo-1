@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class Ator extends Pessoa {
 
-    // Construtor da subclasse chamando o construtor da superclasse Pessoa
     public Ator(String nome, boolean genero, LocalDate dataNascimento, String nacionalidade) {
         super(nome, genero, dataNascimento, nacionalidade);
     }
@@ -14,18 +13,19 @@ public class Ator extends Pessoa {
     public void exibirInfo() {
         System.out.println("Ator: " + nome);
         System.out.println("Gênero: " + (genero ? "Masculino" : "Feminino"));
-        System.out.println("Data de Nascimento: " + dataNascimento);
+        System.out.println("Data de Nascimento: " + (dataNascimento != null ? dataNascimento : "Não informada"));
         System.out.println("Nacionalidade: " + nacionalidade);
-        System.out.println("Idade: " + getIdadeAnos() + " anos");
+        System.out.println("Idade: " + getIdadeAnos().map(i -> i + " anos").orElse("Não informada"));
     }
 
     @Override
     public String toString() {
+        String dataStr = (dataNascimento != null) ? dataNascimento.toString() : "Não informada";
         return String.format(
                 "Ator{nome='%s', genero=%s, dataNascimento=%s, nacionalidade='%s'}",
                 nome,
                 genero ? "Masculino" : "Feminino",
-                dataNascimento,
+                dataStr,
                 nacionalidade
         );
     }
@@ -34,7 +34,7 @@ public class Ator extends Pessoa {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Ator)) return false;
-        if (!super.equals(o)) return false; // Compara atributos de Pessoa
+        if (!super.equals(o)) return false;
         return true;
     }
 
