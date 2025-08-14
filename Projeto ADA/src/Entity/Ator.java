@@ -3,62 +3,43 @@ package Entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Ator {
+public class Ator extends Pessoa {
 
-    private String nome;
-    private LocalDate dataNascimento;
-    private String nacionalidade;
-
-    public Ator(String nome, LocalDate dataNascimento, String nacionalidade) {
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.nacionalidade = nacionalidade;
+    // Construtor da subclasse chamando o construtor da superclasse Pessoa
+    public Ator(String nome, boolean genero, LocalDate dataNascimento, String nacionalidade) {
+        super(nome, genero, dataNascimento, nacionalidade);
     }
 
-    // Getters
-    public String getNome() {
-        return nome;
-    }
-
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public String getNacionalidade() {
-        return nacionalidade;
-    }
-
-    // Setters
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
+    @Override
+    public void exibirInfo() {
+        System.out.println("Ator: " + nome);
+        System.out.println("Gênero: " + (genero ? "Masculino" : "Feminino"));
+        System.out.println("Data de Nascimento: " + dataNascimento);
+        System.out.println("Nacionalidade: " + nacionalidade);
+        System.out.println("Idade: " + getIdadeAnos() + " anos");
     }
 
     @Override
     public String toString() {
-        return "Ator: " +
-                "nome='" + nome + '\'' +
-                ", dataNascimento=" + dataNascimento +
-                ", nacionalidade='" + nacionalidade + '\'';
+        return String.format(
+                "Ator{nome='%s', genero=%s, dataNascimento=%s, nacionalidade='%s'}",
+                nome,
+                genero ? "Masculino" : "Feminino",
+                dataNascimento,
+                nacionalidade
+        );
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ator ator = (Ator) o;
-        return Objects.equals(nome, ator.nome) && Objects.equals(dataNascimento, ator.dataNascimento) && Objects.equals(nacionalidade, ator.nacionalidade);
+        if (!(o instanceof Ator)) return false;
+        if (!super.equals(o)) return false; // Compara atributos de Pessoa
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nome, dataNascimento, nacionalidade);
+        return Objects.hash(super.hashCode());
     }
 }
