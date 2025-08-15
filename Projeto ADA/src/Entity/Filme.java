@@ -9,7 +9,6 @@ public class Filme {
     private String classificacaoIndicativa;
     private String genero;
     private LocalDate dataLancamento;
-    private String duracao;
     private double orcamento;
     private String descricao;
     private List<Diretor> diretores;
