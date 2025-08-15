@@ -23,7 +23,7 @@ public class Filme {
                  String genero,
                  double orcamento,
                  String descricao,
-                 Diretor diretor,
+                 Diretor diretorPrincipal,
                  List<Ator> elenco,
                  List<Diretor> diretores) {
         this.titulo = titulo;
@@ -34,8 +34,8 @@ public class Filme {
         this.descricao = descricao;
         this.diretores = diretores;
         this.elenco = elenco;
-        this.diretores = diretores;
     }
+
     public String getTitulo() {
         return titulo;
     }
@@ -43,19 +43,23 @@ public class Filme {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Filme: ").append(titulo)
-                .append(String.format("%nLançamento       = %s", dataLancamento.format(FORMATO_DATA)))
-                .append(String.format("%nOrçamento        = R$ %.2f", orcamento))
-                .append(String.format("%nDescrição        = %s", descricao))
-                .append(String.format("%nDiretores          = %s"))
-                .append(String.format("%nElenco:"));
+        sb.append("🎬 Filme: ").append(titulo)
+                .append(String.format("%n📅 Lançamento: %s", dataLancamento.format(FORMATO_DATA)))
+                .append(String.format("%n🎞️ Gênero: %s", genero))
+                .append(String.format("%n🔞 Classificação: %s", classificacaoIndicativa))
+                .append(String.format("%n💰 Orçamento: R$ %.2f", orcamento))
+                .append(String.format("%n📝 Descrição: %s", descricao));
+
+        sb.append(String.format("%n🎬 Diretores:"));
         for (Diretor diretor : diretores) {
             sb.append(String.format("%n  - %s", diretor.getNome()));
         }
+
+        sb.append(String.format("%n🎭 Elenco:"));
         for (Ator ator : elenco) {
             sb.append(String.format("%n  - %s", ator.getNome()));
         }
+
         return sb.toString();
     }
-
 }

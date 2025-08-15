@@ -26,7 +26,7 @@ public class Diretor extends Pessoa {
 
     @Override
     public void exibirInfo() {
-        System.out.println("Diretor: " + nome);
+        System.out.println("🎬 Diretor: " + nome);
         System.out.println("Gênero: " + (genero ? "Masculino" : "Feminino"));
         System.out.println("Data de Nascimento: " + (dataNascimento != null ? dataNascimento : "Não informada"));
         System.out.println("Idade: " + getIdadeAnos().map(i -> i + " anos").orElse("Não informada"));
@@ -34,18 +34,30 @@ public class Diretor extends Pessoa {
         System.out.println("Filmes dirigidos: " + (filmesDirigidos.isEmpty() ? "Nenhum" : filmesDirigidos));
     }
 
+
+
     @Override
     public String toString() {
-        String dataStr = (dataNascimento != null) ? dataNascimento.toString() : "Não informada";
-        return String.format(
-                "Diretor{nome='%s', genero=%s, dataNascimento=%s, nacionalidade='%s', filmesDirigidos=%s}",
+        String dataStr = (dataNascimento != null)
+                ? dataNascimento.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                : "Não informada";
+
+        return String.format("""
+            🎬 Diretor
+            ├ Nome: %s
+            ├ Gênero: %s
+            ├ Data de Nascimento: %s
+            ├ Nacionalidade: %s
+            └ Filmes dirigidos: %s
+            """,
                 nome,
                 genero ? "Masculino" : "Feminino",
                 dataStr,
                 nacionalidade,
-                filmesDirigidos.isEmpty() ? "Nenhum" : filmesDirigidos
+                filmesDirigidos.isEmpty() ? "Nenhum" : String.join(", ", filmesDirigidos)
         );
     }
+
 
     @Override
     public boolean equals(Object obj) {

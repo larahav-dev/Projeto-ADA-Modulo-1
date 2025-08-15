@@ -11,7 +11,7 @@ public class Ator extends Pessoa {
 
     @Override
     public void exibirInfo() {
-        System.out.println("Ator: " + nome);
+        System.out.println("🎭 Ator: " + nome);
         System.out.println("Gênero: " + (genero ? "Masculino" : "Feminino"));
         System.out.println("Data de Nascimento: " + (dataNascimento != null ? dataNascimento : "Não informada"));
         System.out.println("Nacionalidade: " + nacionalidade);
@@ -20,9 +20,17 @@ public class Ator extends Pessoa {
 
     @Override
     public String toString() {
-        String dataStr = (dataNascimento != null) ? dataNascimento.toString() : "Não informada";
-        return String.format(
-                "Ator{nome='%s', genero=%s, dataNascimento=%s, nacionalidade='%s'}",
+        String dataStr = (dataNascimento != null)
+                ? dataNascimento.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                : "Não informada";
+
+        return String.format("""
+            🎭 Ator
+            ├ Nome: %s
+            ├ Gênero: %s
+            ├ Data de Nascimento: %s
+            └ Nacionalidade: %s
+            """,
                 nome,
                 genero ? "Masculino" : "Feminino",
                 dataStr,

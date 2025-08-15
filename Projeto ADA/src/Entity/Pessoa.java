@@ -39,11 +39,22 @@ public abstract class Pessoa {
 
     @Override
     public String toString() {
-        String dataStr = (dataNascimento != null) ? dataNascimento.toString() : "Não informada";
-        return "Nome: " + nome +
-                ", Gênero: " + (genero ? "Masculino" : "Feminino") +
-                ", Data de Nascimento: " + dataStr +
-                ", Nacionalidade: " + nacionalidade;
+        String dataStr = (dataNascimento != null)
+                ? dataNascimento.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                : "Não informada";
+
+        return String.format("""
+            📌 Pessoa
+            ├ Nome: %s
+            ├ Gênero: %s
+            ├ Data de Nascimento: %s
+            └ Nacionalidade: %s
+            """,
+                nome,
+                genero ? "Masculino" : "Feminino",
+                dataStr,
+                nacionalidade
+        );
     }
 
     @Override
