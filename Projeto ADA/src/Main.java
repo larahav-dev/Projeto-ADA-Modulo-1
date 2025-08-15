@@ -80,6 +80,28 @@ public class Main {
                 List.of("Christopher Nolan"),
                 List.of("Leonardo DiCaprio", "Joseph Gordon-Levitt")
         );
+
+        Ator ator3 = new Ator("Timothée Chalamet", true, LocalDate.of(1995, 12, 27), "Estados Unidos");
+        Ator ator4 = new Ator("Zendaya", false, LocalDate.of(1996, 9, 1), "Estados Unidos");
+        Ator ator5 = new Ator("Oscar Isaac", true, LocalDate.of(1979, 3, 9), "Guatemala");
+        servicosAtor.cadastrarAtor(ator3);
+        servicosAtor.cadastrarAtor(ator4);
+        servicosAtor.cadastrarAtor(ator5);
+
+        Diretor diretor2 = new Diretor("Denis Villeneuve", true, LocalDate.of(1967, 10, 3), "Canadá");
+        servicosDiretor.cadastrarDiretor(diretor2);
+
+        servicosFilme.cadastrarFilme(
+                "Duna",
+                LocalDate.of(2021, 10, 22),
+                "12 anos",
+                "Ficção Científica",
+                165_000_000d,
+                "O jovem Paul Atreides precisa proteger o futuro de seu povo em um planeta desértico cheio de perigos.",
+                List.of("Denis Villeneuve"),
+                List.of("Timothée Chalamet", "Zendaya", "Oscar Isaac")
+        );
+
     }
 
     // ======= Menus =======
