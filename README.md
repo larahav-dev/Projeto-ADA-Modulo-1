@@ -18,7 +18,9 @@ Um projeto em Java focado em cadastro e consulta de **Atores**, **Diretores** e 
 
 ## DIAGRAMA - Estrutura desenhada
 
-![ac386de2-ccf6-44ef-8a43-043dacecaf58](https://github.com/user-attachments/assets/4650f999-083e-49a8-a6a5-a00592e4a9e1)
+
+<img width="1000" height="9500" alt="imagea (1)" src="https://github.com/user-attachments/assets/51cb3667-b5cd-45a4-adcc-f12dae7f808f" />
+
 
 
 ## ✨ Funcionalidades
