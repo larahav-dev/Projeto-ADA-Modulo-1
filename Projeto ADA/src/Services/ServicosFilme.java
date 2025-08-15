@@ -5,18 +5,19 @@ import Entity.Diretor;
 import Entity.Filme;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class ServicosFilme {
 
     private final List<Filme> filmes = new ArrayList<>();
-    private final List<Ator> atores = new ArrayList<>();
-    private final List<Diretor> diretores = new ArrayList<>();
-
+    private final List<Ator> atores;
+    private final List<Diretor> diretores; // lista compartilhada
     private final Scanner scanner = new Scanner(System.in);
+
+    public ServicosFilme(List<Diretor> diretores, List<Ator> atores) {
+        this.diretores = diretores;
+        this.atores = atores;
+    }
 
     public void cadastrarFilme(String titulo,
                                LocalDate dataLancamento,
@@ -71,6 +72,7 @@ public class ServicosFilme {
 
         Diretor novo = new Diretor(nome, genero, nascimento, nacionalidade);
         diretores.add(novo);
+        System.out.println("✅ Diretor cadastrado com sucesso: " + nome);
         return novo;
     }
 
@@ -89,10 +91,10 @@ public class ServicosFilme {
 
         Ator novo = new Ator(nome, genero, nascimento, nacionalidade);
         atores.add(novo);
+        System.out.println("✅ Ator cadastrado com sucesso: " + nome);
         return novo;
     }
 
-    // ===== Helpers para leitura =====
     private LocalDate lerDataOpcional(String prompt) {
         System.out.print(prompt);
         String data = scanner.nextLine().trim();

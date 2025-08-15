@@ -8,18 +8,27 @@ import Services.ServicosFilme;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
-    private static final ServicosAtor servicosAtor = new ServicosAtor();
-    private static final ServicosDiretor servicosDiretor = new ServicosDiretor();
-    private static final ServicosFilme servicosFilme = new ServicosFilme();
+    // Services agora são inicializados em bloco estático com a MESMA lista de Diretores
+    private static final ServicosAtor servicosAtor;
+    private static final ServicosDiretor servicosDiretor;
+    private static final ServicosFilme servicosFilme;
 
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    static {
+        List<Diretor> listaDiretoresCompartilhada = new ArrayList<>();
+        List<Ator> listaAtoresCompartilhada = new ArrayList<>();
+
+
+        servicosFilme = new ServicosFilme(listaDiretoresCompartilhada, listaAtoresCompartilhada);
+        servicosDiretor = new ServicosDiretor(listaDiretoresCompartilhada);
+        servicosAtor = new ServicosAtor(listaAtoresCompartilhada);
+    }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -48,7 +57,7 @@ public class Main {
         }
     }
 
-    /* ===== NOVO MÉTODO ===== */
+    /* ===== Exemplos iniciais ===== */
     private static void cadastrarExemplosIniciais() {
         // Atores de exemplo
         Ator ator1 = new Ator("Leonardo DiCaprio", true, LocalDate.of(1974, 11, 11), "Estados Unidos");
@@ -56,11 +65,11 @@ public class Main {
         servicosAtor.cadastrarAtor(ator1);
         servicosAtor.cadastrarAtor(ator2);
 
-        // Diretores de exemplo
+        // Diretor de exemplo (entra na lista compartilhada)
         Diretor diretor1 = new Diretor("Christopher Nolan", true, LocalDate.of(1970, 7, 30), "Reino Unido");
         servicosDiretor.cadastrarDiretor(diretor1);
 
-        // Filme de exemplo
+        // Filme de exemplo (vai consultar/criar diretores na lista compartilhada)
         servicosFilme.cadastrarFilme(
                 "A Origem",
                 LocalDate.of(2010, 7, 16),
@@ -112,28 +121,26 @@ public class Main {
         }
     }
 
-
-
     private static void menuFilmes(Scanner scanner) {
         while (true) {
             System.out.println("\n== Menu Filmes ==");
-            System.out.println("1. Cadastrar filme");
-            System.out.println("2. Listar filmes");
+            System.out.println("1. Listar filmes");
+            System.out.println("2. Cadastrar filme");
             System.out.println("3. Visualizar filme");
             System.out.println("4. Voltar");
             String opcao = scanner.nextLine().trim();
 
             switch (opcao) {
-                case "1": cadastrarFilme(scanner);   break;
-                case "2": listarFilmes();             break;
-                case "3": visualizarFilme(scanner);   break;
+                case "1": listarFilmes(); break;
+                case "2": cadastrarFilme(scanner); break;
+                case "3": visualizarFilme(scanner); break;
                 case "4": return;
                 default: System.out.println("Opção inválida.");
             }
         }
     }
 
-    /* ===== CADASTRO DE ATOR ===== */
+    /* ===== Cadastro de Ator ===== */
     private static void cadastrarAtor(Scanner scanner) {
         System.out.println("\n--- Cadastro de Ator ---");
         System.out.print("Nome: ");
@@ -149,7 +156,7 @@ public class Main {
         if (sucesso) System.out.println("✅ Ator cadastrado com sucesso.");
     }
 
-    /* ===== CADASTRO DE DIRETOR ===== */
+    /* ===== Cadastro de Diretor ===== */
     private static void cadastrarDiretor(Scanner scanner) {
         System.out.println("\n--- Cadastro de Diretor ---");
         System.out.print("Nome: ");
@@ -178,6 +185,7 @@ public class Main {
         if (lista.isEmpty()) System.out.println("Nenhum diretor cadastrado.");
         else lista.forEach(System.out::println);
     }
+
     private static void visualizarAtor(Scanner scanner) {
         System.out.print("Digite o nome do ator: ");
         String nome = scanner.nextLine();
@@ -187,6 +195,7 @@ public class Main {
                 () -> System.out.println("Ator não encontrado.")
         );
     }
+
     private static void visualizarDiretor(Scanner scanner) {
         System.out.print("Digite o nome do diretor: ");
         String nome = scanner.nextLine();
@@ -196,7 +205,6 @@ public class Main {
                 () -> System.out.println("Diretor não encontrado.")
         );
     }
-
 
     // ======= Filmes =======
     private static void cadastrarFilme(Scanner scanner) {
@@ -229,7 +237,7 @@ public class Main {
         System.out.print("Atores (separados por vírgula): ");
         List<String> nomesAtores = lerLista(scanner.nextLine());
 
-        // Aqui delegamos para o ServicosFilme, que cuidará de pedir dados completos
+        // Delegamos para o ServicosFilme (usa a lista compartilhada de Diretores)
         servicosFilme.cadastrarFilme(
                 titulo,
                 dataLancamento,
@@ -255,7 +263,7 @@ public class Main {
         else System.out.println("Filme não encontrado.");
     }
 
-    /* ===== HELPERS ===== */
+    /* ===== Helpers ===== */
     private static LocalDate lerData(Scanner scanner, String prompt) {
         System.out.print(prompt);
         try {
@@ -266,7 +274,6 @@ public class Main {
         }
     }
 
-    // Versão opcional: Enter em branco retorna null
     private static LocalDate lerDataOpcional(Scanner scanner, String prompt) {
         System.out.print(prompt);
         String entrada = scanner.nextLine().trim();
